@@ -1,5 +1,7 @@
 FROM ubuntu:16.04
 
+ENV DEBIAN_FRONTEND noninteractive
+
 RUN apt-get update -y
 
 RUN mkdir -p /var/www
@@ -23,14 +25,15 @@ RUN mkdir -p /var/log/supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 VOLUME ["/var/log/supervisor"]
 
-# Enables mcrypt
-# RUN php5enmod mcrypt
-
 # Installs Composer
 RUN apt-get install composer -y
 
-# Install MySQL
-# RUN apt-get install mysql-server -y
+# Setting up some mysql configurations
+RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
+RUN echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
+
+# Installs MySQL
+RUN apt-get install mysql-server -y
 
 # Set up site
 COPY default.site /etc/nginx/sites-available/default
