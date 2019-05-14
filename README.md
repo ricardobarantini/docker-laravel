@@ -1,15 +1,25 @@
-# Docker Passport
+# Docker Laravel
 
-Docker image to run the EBT Passport
+Docker image to run Laravel project.
+
+## What is inside?
+
+This image contains:
+
+- PHP 7.1
+- Nginx
+- MySQL
+- Redis
+- Certbot
 
 ## Downloading image
 
-`docker pull ebt/passport:1.0`
+`docker pull ricardobarantini/laravel`
 
 ## Starting container
 
-`docker run -d -v /path/to/passport/laravel:/var/www/laravel -p 80:80 --name passport ricardobarantini/passport:0.1`
+`docker run -d -v /path/to/passport/laravel:/var/www/laravel -p 80:80 --name containerName ricardobarantini/laravel`
 
 ## Accessing the container
 
-`docker exec -it passport bash`
+`docker exec -it containerName bash`

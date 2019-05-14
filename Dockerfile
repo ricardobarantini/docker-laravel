@@ -17,7 +17,7 @@ RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php -y
 RUN apt-get update -y
 
 # Installs PHP 7.1
-RUN apt-get install php7.1 php7.1-cli php7.1-fpm php7.1-mysql php7.1-xml php7.1-mcrypt php7.1-curl php7.1-dev php7.1-mbstring -y
+RUN apt-get install php7.1 php7.1-cli php7.1-fpm php7.1-mysql php7.1-xml php7.1-mcrypt php7.1-curl php7.1-dev php7.1-mbstring php7.1-redis -y
 
 # Install Supervisord
 RUN apt-get install supervisor -y
@@ -41,15 +41,26 @@ COPY default.site /etc/nginx/sites-available/default
 # Forces reload
 RUN echo "sudo /etc/init.d/nginx start" | tee -a /etc/rc.local
 
-# -v /path/to/passport/laravel:/var/www/laravel
+# Installs Redis
+RUN apt-get install redis-server -y
+
+# Starts Redis
+RUN service redis-server start
+
+# Setting up Redis
+RUN echo "maxmemory 256mb" >> /etc/redis/redis.conf
+RUN echo "maxmemory-policy allkeys-lru" >> /etc/redis/redis.conf
+RUN service redis-server restart
+
+# Installs Let's Encrypt
+RUN add-apt-repository ppa:certbot/certbot -y
+RUN apt-get update -y
+RUN apt-get install python-certbot-nginx -y
+
 VOLUME ["/var/www/laravel"]
 
 WORKDIR /var/www/laravel
 
-EXPOSE 80
-
-# ENTRYPOINT service nginx start && service php7.1-fpm start
-
-# CMD tail -f /dev/null
+EXPOSE 80 443
 
 ENTRYPOINT ["/bin/bash", "-c", "/usr/bin/supervisord"]
