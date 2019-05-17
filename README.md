@@ -23,3 +23,31 @@ This image contains:
 ## Accessing the container
 
 `docker exec -it containerName bash`
+
+## Generating the ssl certificate
+
+Inside the container, run the command:
+
+`certbot --nginx -d app.tld`
+
+At the `-d app.tld` just change for the site domain name.
+
+## Updating the Nginx
+
+Inside the container, run:
+
+`vim /etc/nginx/sites-enabled/default`
+
+At the line 5, changes the `localhost` to the site domain name.
+
+At the line 6, changes `root`  path if is necessary.
+
+## Creating the database
+
+`mysql -u root -p -e "create database name;"`
+
+Credentials:
+
+Username: root
+
+Password: root
