@@ -61,7 +61,9 @@ RUN add-apt-repository ppa:certbot/certbot -y
 RUN apt-get update -y
 RUN apt-get install python-certbot-nginx -y
 
+# Sets Volumes
 VOLUME ["/var/www/laravel"]
+VOLUME ["/var/lib/mysql"]
 
 WORKDIR /var/www/laravel
 

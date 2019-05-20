@@ -16,9 +16,13 @@ This image contains:
 
 `docker pull ricardobarantini/laravel`
 
+## Creates MySQL Volume
+
+`docker volume create --name mysql_volume`
+
 ## Starting container
 
-`docker run -d -v /path/to/passport/laravel:/var/www/laravel -p 80:80 --name containerName ricardobarantini/laravel`
+`docker run -d -v /path/to/passport/laravel:/var/www/laravel -v mysql_volume:/var/lib/mysql -p 80:80 -p 443:443 --name containerName ricardobarantini/laravel`
 
 ## Accessing the container
 
