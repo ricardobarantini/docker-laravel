@@ -67,6 +67,6 @@ VOLUME ["/var/lib/mysql"]
 
 WORKDIR /var/www/laravel
 
-EXPOSE 80 443
+EXPOSE 80 443 3306
 
 ENTRYPOINT ["/bin/bash", "-c", "/usr/bin/supervisord"]
