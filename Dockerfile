@@ -32,7 +32,7 @@ VOLUME ["/var/log/supervisor"]
 # Installs Composer
 RUN apt-get install composer -y
 
-# Setting up some mysql configurations
+# Setting up some MySQL configurations
 RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections
 RUN echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
 
@@ -41,6 +41,9 @@ RUN apt-get install mysql-server -y
 
 # Set up site
 COPY default.site /etc/nginx/sites-available/default
+
+# Changing some Nginx settings
+RUN sed -i '/# server_tokens*/ a client_max_body_size\ 100M\;' /etc/nginx/nginx.conf
 
 # Forces reload
 RUN echo "sudo /etc/init.d/nginx start" | tee -a /etc/rc.local
