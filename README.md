@@ -6,7 +6,7 @@ Docker image to run Laravel project.
 
 This image contains:
 
-- PHP 7.1
+- PHP 7.2
 - Nginx
 - MySQL
 - Redis
@@ -22,11 +22,11 @@ This image contains:
 
 ## Starting container
 
-`docker run -d -v /path/to/passport/laravel:/var/www/laravel -v mysql_volume:/var/lib/mysql -P --name containerName ricardobarantini/laravel`
+`docker run -d -v /path/to/project/laravel:/var/www/html -v mysql_volume:/var/lib/mysql -P --name container_name ricardobarantini/laravel`
 
 ## Accessing the container
 
-`docker exec -it containerName bash`
+`docker exec -it container_name bash`
 
 ## Generating the ssl certificate
 
@@ -52,14 +52,14 @@ At the line 6, changes `root`  path if is necessary.
 
 Credentials:
 
-Username: root
+**Username0**: root
 
-Password: root
+**Password:** root
 
-## Updating the docker image
+## Updating the Docker image
 
-`docker stop containerName`
+`docker stop container_name`
 
-`docker rm containerName`
+`docker rm container_name`
 
-`docker run -d -v /path/to/passport/laravel:/var/www/laravel -v mysql_volume:/var/lib/mysql -P --name containerName ricardobarantini/laravel`
+`docker run -d -v /path/to/project/laravel:/var/www/html -v mysql_volume:/var/lib/mysql -P --name container_name ricardobarantini/laravel`
