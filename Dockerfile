@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -16,8 +16,8 @@ RUN apt-get install nginx -y
 RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php -y
 RUN apt-get update -y
 
-# Installs PHP 7.1
-RUN apt-get install php7.1 php7.1-cli php7.1-fpm php7.1-mysql php7.1-xml php7.1-mcrypt php7.1-curl php7.1-dev php7.1-mbstring php7.1-redis php7.1-zip php7.1-gd -y
+# Installs PHP 7.2
+RUN apt-get install php7.2 php7.2-cli php7.2-fpm php7.2-mysql php7.2-xml php7.2-curl php7.2-dev php7.2-mbstring php7.2-redis php7.2-zip php7.2-gd php7.2-bcmath -y
 
 # Install PHP Magick
 RUN apt-get update -y
@@ -65,10 +65,10 @@ RUN apt-get update -y
 RUN apt-get install python-certbot-nginx -y
 
 # Sets Volumes
-VOLUME ["/var/www/laravel"]
+VOLUME ["/var/www/html"]
 VOLUME ["/var/lib/mysql"]
 
-WORKDIR /var/www/laravel
+WORKDIR /var/www/html
 
 EXPOSE 80 443 3306
 
