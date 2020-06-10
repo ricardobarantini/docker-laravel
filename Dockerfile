@@ -16,8 +16,8 @@ RUN apt-get install nginx -y
 RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php -y
 RUN apt-get update -y
 
-# Installs PHP 7.2
-RUN apt-get install php7.2 php7.2-cli php7.2-fpm php7.2-mysql php7.2-xml php7.2-curl php7.2-dev php7.2-mbstring php7.2-redis php7.2-zip php7.2-gd php7.2-bcmath php7.2-pgsql -y
+# Installs PHP 7.4
+RUN apt-get install php7.4 php7.4-cli php7.4-fpm php7.4-mysql php7.4-xml php7.4-curl php7.4-dev php7.4-mbstring php7.4-redis php7.4-zip php7.4-gd php7.4-bcmath php7.4-pgsql -y
 
 # Install PHP Magick
 RUN apt-get update -y
@@ -70,6 +70,6 @@ VOLUME ["/var/lib/mysql"]
 
 WORKDIR /var/www/html
 
-EXPOSE 80 443 3306
+EXPOSE 80 8080 443 3306
 
 ENTRYPOINT ["/bin/bash", "-c", "/usr/bin/supervisord"]
