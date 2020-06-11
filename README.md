@@ -6,7 +6,7 @@ Docker image to run Laravel project.
 
 This image contains:
 
-- PHP 7.2
+- PHP 7.4
 - Nginx
 - MySQL
 - Redis
