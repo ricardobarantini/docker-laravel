@@ -10,6 +10,7 @@ This image contains:
 - Nginx
 - MySQL
 - Redis
+- Xdebug
 - Certbot
 
 ## Downloading image
@@ -63,3 +64,33 @@ Credentials:
 `docker rm container_name`
 
 `docker run -d -v /path/to/project/laravel:/var/www/html -v mysql_volume:/var/lib/mysql -P --name container_name ricardobarantini/laravel`
+
+## Configuring Xdebug
+
+You will need to know your ip host (local machine).
+
+Run the following command:
+
+`hostname -I`
+
+The first ip address is your ip host.
+
+Access the container and run:
+
+`vim /etc/php/7.4/mods-available/xdebug.ini`
+
+At the line: `xdebug.remote_host=` put your ip host and save the file.
+
+### PhpStorm
+
+Open your project on PhpStorm.
+
+Access the settings with **CTRL+ALT+S** and go to  **Languages & Frameworks > Servers**.
+
+Press **Insert** or click at the `+` signal to add a new server.
+
+Fill the **Name** with a descriptive name.
+
+Fill the **Host**** with **localhost**
+
+Check **Use path mappings**

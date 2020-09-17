@@ -1,9 +1,12 @@
 FROM ubuntu:18.04
 
+# Setting up a environment variables
 ENV DEBIAN_FRONTEND noninteractive
 
+# Updates the OS
 RUN apt-get update -y
 
+# Creates the project directory
 RUN mkdir -p /var/www
 
 # Installs Utils
@@ -12,18 +15,18 @@ RUN apt-get install build-essential unzip libaio1 curl git git-core nfs-common c
 # Installs Nginx
 RUN apt-get install nginx -y
 
-#RUN add-apt-repository ppa:ondrej/php -y
+# RUN add-apt-repository ppa:ondrej/php -y
 RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php -y
 RUN apt-get update -y
 
-# Installs PHP 7.4
-RUN apt-get install php7.4 php7.4-cli php7.4-fpm php7.4-mysql php7.4-xml php7.4-curl php7.4-dev php7.4-mbstring php7.4-redis php7.4-zip php7.4-gd php7.4-bcmath php7.4-pgsql -y
+# Installs PHP 7.1
+RUN apt-get install php7.1 php7.1-cli php7.1-fpm php7.1-mysql php7.1-xml php7.1-curl php7.1-dev php7.1-mbstring php7.1-redis php7.1-zip php7.1-gd php7.1-bcmath php7.1-pgsql php7.1-xdebug -y
 
-# Install PHP Magick
+# Installs PHP Magick
 RUN apt-get update -y
 RUN apt-get install php-imagick -y
 
-# Install Supervisord
+# Installs Supervisord
 RUN apt-get install supervisor -y
 RUN mkdir -p /var/log/supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
@@ -68,8 +71,14 @@ RUN apt-get install python-certbot-nginx -y
 VOLUME ["/var/www/html"]
 VOLUME ["/var/lib/mysql"]
 
+# Sets the work directory
 WORKDIR /var/www/html
 
+# Copies the xdebug configuration file to the container
+COPY xdebug.ini /etc/php/7.1/mods-available/xdebug.ini
+
+# Exposes a few ports
 EXPOSE 80 8080 443 3306
 
+# Runs this command when the container it's initiate
 ENTRYPOINT ["/bin/bash", "-c", "/usr/bin/supervisord"]
