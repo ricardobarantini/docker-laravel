@@ -19,8 +19,8 @@ RUN apt-get install nginx -y
 RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php -y
 RUN apt-get update -y
 
-# Installs PHP 7.1
-RUN apt-get install php7.1 php7.1-cli php7.1-fpm php7.1-mysql php7.1-xml php7.1-curl php7.1-dev php7.1-mbstring php7.1-redis php7.1-zip php7.1-gd php7.1-bcmath php7.1-pgsql php7.1-xdebug -y
+# Installs PHP 5.6
+RUN apt-get install php5.6 php5.6-cli php5.6-fpm php5.6-mysql php5.6-xml php5.6-curl php5.6-dev php5.6-mbstring php5.6-redis php5.6-zip php5.6-gd php5.6-bcmath php5.6-pgsql php5.6-xdebug -y
 
 # Installs PHP Magick
 RUN apt-get update -y
@@ -75,7 +75,7 @@ VOLUME ["/var/lib/mysql"]
 WORKDIR /var/www/html
 
 # Copies the xdebug configuration file to the container
-COPY xdebug.ini /etc/php/7.1/mods-available/xdebug.ini
+COPY xdebug.ini /etc/php/5.6/mods-available/xdebug.ini
 
 # Exposes a few ports
 EXPOSE 80 8080 443 3306
