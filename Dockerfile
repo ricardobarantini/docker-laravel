@@ -12,7 +12,7 @@ RUN apt-get install build-essential unzip libaio1 curl git git-core nfs-common c
 # Installs Nginx
 RUN apt-get install nginx -y
 
-#RUN add-apt-repository ppa:ondrej/php -y
+# RUN add-apt-repository ppa:ondrej/php -y
 RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php -y
 RUN apt-get update -y
 
@@ -58,6 +58,24 @@ RUN service redis-server start
 RUN echo "maxmemory 256mb" >> /etc/redis/redis.conf
 RUN echo "maxmemory-policy allkeys-lru" >> /etc/redis/redis.conf
 RUN service redis-server restart
+
+# Installs Oracle drivers
+COPY drivers/instantclient-basic-linux.x64-12.1.0.2.0.zip /root/instantclient-basic-linux.x64-12.1.0.2.0.zip 
+COPY drivers/instantclient-sdk-linux.x64-12.1.0.2.0.zip /root/instantclient-sdk-linux.x64-12.1.0.2.0.zip 
+RUN mkdir -p /opt/oracle/
+RUN unzip /root/instantclient-basic-linux.x64-12.1.0.2.0.zip -d /opt/oracle
+RUN unzip /root/instantclient-sdk-linux.x64-12.1.0.2.0.zip -d /opt/oracle
+RUN mv /opt/oracle/instantclient_12_1 /opt/oracle/instantclient
+RUN chown -R root:www-data /opt/oracle
+RUN ln -s /opt/oracle/instantclient/libclntsh.so.12.1 /opt/oracle/instantclient/libclntsh.so
+RUN ln -s /opt/oracle/instantclient/libocci.so.12.1 /opt/oracle/instantclient/libocci.so
+RUN echo /opt/oracle/instantclient > /etc/ld.so.conf.d/oracle-instantclient.conf
+RUN ldconfig
+RUN echo 'instantclient,/opt/oracle/instantclient' | pecl install oci8
+RUN echo "extension = oci8.so" >> /etc/php/7.4/fpm/php.ini
+RUN echo "LD_LIBRARY_PATH=\"/opt/oracle/instantclient\"" >> /etc/environment
+RUN echo "ORACLE_HOME=\"/opt/oracle/instantclient\"" >> /etc/environment
+RUN service php7.4-fpm restart
 
 # Installs Let's Encrypt
 RUN add-apt-repository ppa:certbot/certbot -y
