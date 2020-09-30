@@ -9,6 +9,7 @@ This image contains:
 - PHP 7.4
 - Nginx
 - MySQL
+- SQLite3
 - Redis
 - Certbot
 
@@ -22,7 +23,7 @@ This image contains:
 
 ## Starting container
 
-`docker run -d -v /path/to/project/laravel:/var/www/html -v mysql_volume:/var/lib/mysql -P --name container_name ricardobarantini/laravel`
+`docker run -d -v /path/to/project/laravel:/var/www/html -v mysql_volume:/var/lib/mysql -p 80:80 -p 443:443 -p 3306:3306 --name container_name ricardobarantini/laravel`
 
 ## Accessing the container
 
@@ -62,4 +63,4 @@ Credentials:
 
 `docker rm container_name`
 
-`docker run -d -v /path/to/project/laravel:/var/www/html -v mysql_volume:/var/lib/mysql -P --name container_name ricardobarantini/laravel`
+`docker run -d -v /path/to/project/laravel:/var/www/html -v mysql_volume:/var/lib/mysql -p 80:80 -p 443:443 -p 3306:3306 --name container_name ricardobarantini/laravel`

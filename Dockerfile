@@ -17,7 +17,7 @@ RUN LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php -y
 RUN apt-get update -y
 
 # Installs PHP 7.4
-RUN apt-get install php7.4 php7.4-cli php7.4-fpm php7.4-mysql php7.4-xml php7.4-curl php7.4-dev php7.4-mbstring php7.4-redis php7.4-zip php7.4-gd php7.4-bcmath php7.4-pgsql -y
+RUN apt-get install php7.4 php7.4-cli php7.4-fpm php7.4-mysql php7.4-xml php7.4-curl php7.4-dev php7.4-mbstring php7.4-redis php7.4-zip php7.4-gd php7.4-bcmath php7.4-pgsql php7.4-sqlite3 -y
 
 # Install PHP Magick
 RUN apt-get update -y
@@ -38,6 +38,9 @@ RUN echo "mysql-server mysql-server/root_password_again password root" | debconf
 
 # Installs MySQL
 RUN apt-get install mysql-server -y
+
+# Install SQLite3
+RUN apt-get install sqlite3 -y
 
 # Set up site
 COPY default.site /etc/nginx/sites-available/default
