@@ -76,6 +76,7 @@ RUN echo /opt/oracle/instantclient > /etc/ld.so.conf.d/oracle-instantclient.conf
 RUN ldconfig
 RUN echo 'instantclient,/opt/oracle/instantclient' | pecl install oci8
 RUN echo "extension = oci8.so" >> /etc/php/7.4/fpm/php.ini
+RUN echo "extension = oci8.so" >> /etc/php/7.4/cli/php.ini
 RUN echo "LD_LIBRARY_PATH=\"/opt/oracle/instantclient\"" >> /etc/environment
 RUN echo "ORACLE_HOME=\"/opt/oracle/instantclient\"" >> /etc/environment
 RUN service php7.4-fpm restart
